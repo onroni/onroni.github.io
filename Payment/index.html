@@ -6,30 +6,53 @@
     <title>Payment</title>
 </head>
 <body>
-    <div class="payment-container">
-        <div class="payment-method" id="paymentMethodWindow">
-            <div class="item" id="atm">ATM</div>
-            <div class="item" id="retail">Payment Retail</div>
-            <div class="item" id="card">Credit / Debit</div>
-            <div class="item" id="debit">Debit Online</div>
-            <div class="item" id="wallet">Wallet</div>
+    <div class="main-container">
+        <div class="payment-detail">
+            <h3>Rp 540.000</h3>
         </div>
-
-        <div class="window" id="atm-window">
-            <div id="back">ATM</div>
-            <button class="close" onclick="closeWindow()">&times;</button>
+        <div class="title-bar">
+            <button class="back-button hidden" onclick="closeWindow()">&#10094</button>
+            <div class="title">Payment Method</div>
         </div>
-        <div class="window" id="retail-window">
-            <div>Retail</div>
-        </div>
-        <div class="window" id="card-window">
-            <div>Card</div>
-        </div>
-        <div class="window" id="debit-window">
-            <div>Debit</div>
-        </div>
-        <div class="window" id="wallet-window">
-            <div>Wallet</div>
+        <div class="payment-container">
+            <div class="payment-method" id="paymentMethodWindow">
+                <div class="item" id="atm">
+                    <div>ATM</div>
+                    <div>&#10095</div>
+                </div>
+                <div class="item" id="retail">
+                    <div>Payment Retail</div>
+                    <div>&#10095</div>
+                </div>
+                <div class="item" id="card">
+                    <div>Credit / Debit</div>
+                    <div>&#10095</div>
+                </div>
+                <div class="item" id="debit">
+                    <div>Debit Online</div>
+                    <div>&#10095</div>
+                </div>
+                <div class="item" id="wallet">
+                    <div>Wallet</div>
+                    <div>&#10095</div>
+                </div>
+            </div>
+    
+            <div class="window" id="atm-window">
+                <div id="back">ATM</div>
+            </div>
+            <div class="window" id="retail-window">
+                <div>Retail</div>
+            </div>
+            <div class="window" id="card-window">
+                <div>Card</div>
+            </div>
+            <div class="window" id="debit-window">
+                <div>Debit</div>
+            </div>
+            <div class="window" id="wallet-window">
+                <div>Wallet</div>
+            </div>
         </div>
     </div>
 </body>
@@ -37,7 +60,7 @@
     var atm = document.getElementById('atm');
     var retail = document.getElementById('retail');
     var card = document.getElementById('card');
-    var debitOnline = document.getElementById('debitOnline');
+    var debit = document.getElementById('debit');
     var wallet = document.getElementById('wallet');
 
     var paymentMethodWindow = document.getElementById('paymentMethodWindow');
@@ -47,31 +70,68 @@
     var debit_window = document.getElementById('debit-window');
     var wallet_window = document.getElementById('wallet-window');
 
+    function hidePaymentMethodWindow(){
+        paymentMethodWindow.style.width = '0%';
+        paymentMethodWindow.style.margin = '0';
+    }
+    function showBackButton(){
+        document.querySelector('.title-bar .back-button').classList.remove('hidden');
+    }
+
+    function hideBackButton(){
+        document.querySelector('.title-bar .back-button').classList.add('hidden');
+    }
+
     atm.addEventListener('mouseup',()=>{
         atm_window.style.width = '100%';
-        paymentMethodWindow.style.width = '0%';
+        hidePaymentMethodWindow();
+        showBackButton();
     });
 
     retail.addEventListener('mouseup',()=>{
         retail_window.style.width = '100%';
-        paymentMethodWindow.style.width = '0%';
+        hidePaymentMethodWindow();
+        showBackButton();
     });
 
-    first.addEventListener('mouseup', ()=>{
-        console.log('first clicked');
-        flipCardInner.style.transform = 'rotateY(180deg)';
+    card.addEventListener('mouseup', ()=>{
+        card_window.style.width = '100%';
+        hidePaymentMethodWindow();
+        showBackButton();
     });
 
-    second.addEventListener('mouseup', ()=>{
-        console.log('second clicked');
+    debit.addEventListener('mouseup', ()=>{
+        debit_window.style.width = '100%';
+        hidePaymentMethodWindow();
+        showBackButton();
+    });
+
+    wallet.addEventListener('mouseup', ()=>{
+        wallet_window.style.width = '100%';
+        hidePaymentMethodWindow();
+        showBackButton();
     });
 
     function closeWindow(){
         atm_window.style.width = '0';
+        retail_window.style.width = '0';
+        card_window.style.width = '0';
+        debit_window.style.width = '0';
+        wallet_window.style.width = '0';
         paymentMethodWindow.style.width = '100%';
+        hideBackButton();
     }
 </script>
 <style>
+    .payment-detail{
+        padding: 20px;
+    }
+    .back-button{
+        background: none;
+        border: none;
+        padding: 0px 10px;
+        font-size: larger;
+    }
     *{
         margin: 0;
         padding: 0;
@@ -79,37 +139,55 @@
     body {
         font-family: Arial, Helvetica, sans-serif;
     }
+    .main-container{
+        width: 400px;
+        border: 3px solid #CCC;
+    }
+    .title-bar{
+        background: #DDD;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        
+        padding: 5px;
+        font-size: larger;
+    }
+    .title-bar .title{
+        margin-left: 10px;
+        margin-top: 3px;
+    }
     .payment-container{
         display: flex;
         flex-direction: row;
         font-size: larger;
-        width: 400px;
-        background: #ccc;
-        margin: 0;
+        width: 93%;
+        /* background: #ccc; */
+        margin: 10px;
         overflow: hidden;
-        padding: 10px;
     }
     .payment-method{
         width: 100%;
-        /* margin-left: -50%; */
-        background: yellowgreen;
         overflow: hidden;
     }
     .payment-method .item{
-        border-bottom: 1px solid #999;
+        border-bottom: 1px solid #eee;
         padding: 10px 0px;
+        display: flex;
+        justify-content: space-between;
     }
 
-    .window{
+    .window {
         width: 0;
         background: yellow;
         overflow: hidden;
     }
 
     .window, .payment-method{
-        transition: width 0.5s;
+        transition: width 0.3s;
     }
-   
+    .hidden{
+        display: none;
+    }
 </style>
 <script defer src="jquery.min.js"></script>
 <script>
