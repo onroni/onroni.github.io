@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+</head>
+<body>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="first-face">
+            <div id="bankTransfer">ATM</div>
+            <div id="retail">Payment Retail</div>
+            <div id="">Credit / Debit</div>
+            <div id="">Debit Online</div>
+          </div>
+
+          <div class="second-face">
+            <div id="back">SEcond</div>
+            <h1>John Doe</h1> 
+            <p>Architect & Engineer</p> 
+            <p>We love that guy</p>
+          </div>
+
+          <div class="third-face">
+            <div id="back">Third</div>
+            <h1>John Doe</h1> 
+            <p>Architect & Engineer</p> 
+            <p>We love that guy</p>
+            </div>
+        </div>
+      </div>
+</body>
+<script>
+    var first = document.getElementById('bankTransfer');
+    var second = document.getElementById('creditCard');
+    var flipCardInner = document.querySelector('.flip-card-inner');
+
+    var back = document.getElementById('back');
+
+    back.addEventListener('mouseup',()=>{
+        flipCardInner.style.transform = 'rotateY(0deg)';
+    });
+
+    first.addEventListener('mouseup', ()=>{
+        console.log('first clicked');
+        flipCardInner.style.transform = 'rotateY(180deg)';
+    });
+
+    second.addEventListener('mouseup', ()=>{
+        console.log('second clicked');
+    });
+</script>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    #first, #second{
+        padding: 20px;
+    }
+    
+    .flip-card {
+        background-color: transparent;
+        width: 300px;
+        height: 300px;
+        perspective: 1000px;
+    }
+    
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+    
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+    
+    .first-face, .second-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    
+    .first-face {
+        background-color: #bbb;
+        color: black;
+    }
+    
+    .second-face {
+        background-color: #2980b9;
+        color: white;
+        transform: rotateY(180deg);
+    }
+</style>
+</html>
