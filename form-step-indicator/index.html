@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>The select element</h1>
+
+<p>The select element is used to create a drop-down list:</p>
+
+<label for="cars" placeholder="Select your cars"></label>
+
+<select id="carsOption" id="cars">
+<option value=''>Please select the value</option>
+  <option value="volvo">Volvo</option>
+  <option value="saabiiii">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
+  
+<button onclick="setCars('new')">New Cars </button>
+<button onclick="setCars('old')">Old Cars </button>
+</body>
+
+<style>
+  #carsOption{
+    padding: 10px;
+  }
+  option{
+    padding: 10px;
+  }
+</style>
+  
+<script>
+  var setCars = carType => {
+    if(carType === 'new') setNewCarOption();
+    if(carType === 'old') setOldCarOption();
+  }
+
+  var carOption = document.getElementById('carsOption');
+
+  function setNewCarOption(){
+    var options = `
+      <option value="carA">New Car A</option>
+      <option value="carb">New Car B</option>
+      <option value="carc">New Car V</option>
+      <option value="card">New Car D</option>
+    `;
+
+    carOption.innerHTML = options;
+  }
+
+  function setOldCarOption(){
+    var options = `
+      <option value="carA">Old Car A</option>
+      <option value="carb">Old Car B</option>
+      <option value="carc">Old Car V</option>
+      <option value="card">Old Car D</option>
+    `;
+
+    carOption.innerHTML = options;
+  }
+</script>
+
+</html>

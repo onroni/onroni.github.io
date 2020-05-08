@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="main-steps-container">
+        <div id="steps-container">
+            <div id="port1" class="circle active">1</div>
+        </div>
+    </div>
+</body>
+
+<script>
+(function(){
+    const totalSteps = 5;
+    const currentPosition = 3;
+
+    const planeElement = `<img id="plane" src="./citi.png"/>`;
+
+    let ports = "";
+    for(let i=2; i<=totalSteps; i++){
+        let active = i <= currentPosition ? "active" : "";
+        ports += `<div class="row ${active}"></div>
+                <div id="port${i}" class="circle ${active}">${i}</div>`;
+    }
+    var mainContainer = document.getElementById('steps-container');
+    mainContainer.innerHTML += ports;
+
+    const currentPort = document.getElementById(`port${currentPosition}`);
+    currentPort.innerHTML += planeElement;
+})();
+</script>
+<style>
+.main-steps-container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background:yellow;
+}
+#steps-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    align-items: center;
+    padding-top: 60px;
+    --plane-width: 150px;
+}
+.circle :first{
+    margin-left: 100px;
+}
+.circle, .row {
+    background-color: green;
+    opacity: 0.2;
+    color: white;
+    margin: 0;
+}
+.active {
+    opacity: 1;
+}
+
+.row {
+    width: 100px;
+    height: 5px;
+    border-radius: 3px;
+    margin: 0px 3px;
+}
+.circle {
+    font-size: 20px;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 5px;
+    padding-top: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#plane{
+    padding-top: 5px;
+    position: absolute;
+    width: var(--plane-width);
+    top: 0;
+    margin-left: calc(var(--plane-width)/2*-1);
+}
+</style>
+  
+
+
+</html>
