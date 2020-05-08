@@ -1,3 +1,6 @@
+:root{
+    --citilink-green: rgb(101, 179, 46);
+}
 .payment-detail{
     padding: 20px;
 }
@@ -53,10 +56,20 @@ body {
 
 .window {
     width: 0;
-    background: rgb(243, 243, 239);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
 }
-
+.window button{
+    padding: 8px 10px;
+    background-color: var(--citilink-green);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
+}
 .window, .payment-method{
     transition: width 0.3s;
 }

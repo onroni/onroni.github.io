@@ -4,14 +4,15 @@ var card = document.getElementById('card');
 var debit = document.getElementById('debit');
 var wallet = document.getElementById('wallet');
 
-var paymentMethodWindow = document.getElementById('paymentMethodWindow');
 var atm_window = document.getElementById('atm-window');
 var retail_window = document.getElementById('retail-window');
 var card_window = document.getElementById('card-window');
 var debit_window = document.getElementById('debit-window');
 var wallet_window = document.getElementById('wallet-window');
 
+var paymentMethodWindow = document.getElementById('paymentMethodWindow');
 var title = document.querySelector('.title-bar .title');
+var nextButton = document.getElementById('nextButton');
 
 function setTitle(newTitle){
     title.innerHTML = newTitle;
@@ -29,42 +30,52 @@ function hideBackButton(){
     document.querySelector('.title-bar .back-button').classList.add('hidden');
 }
 
-atm.addEventListener('mouseup',()=>{
-    atm_window.style.width = '100%';
-    hidePaymentMethodWindow();
-    setTitle('ATM');
-    showBackButton();
-});
+function SetPaymentMethod(method){
+    switch(method){
+        case 'atm': ProsesPaymentATM(); break;
+        case 'retail': ProsesPaymentRetail(); break;
+        case 'card': ProsesPaymentCard(); break;
+        case 'debit': ProsesPaymentDebit(); break;
+        case 'wallet': ProsesPaymentWallet(); break;
+    }
+}
 
-retail.addEventListener('mouseup',()=>{
-    retail_window.style.width = '100%';
-    hidePaymentMethodWindow();
-    setTitle('Retail');
-    showBackButton();
-});
+function ProsesPaymentATM(){
 
-card.addEventListener('mouseup', ()=>{
-    card_window.style.width = '100%';
-    hidePaymentMethodWindow();
-    setTitle('Card / Debit');
-    showBackButton();
-});
+}
 
-debit.addEventListener('mouseup', ()=>{
-    debit_window.style.width = '100%';
-    hidePaymentMethodWindow();
-    setTitle('Debit Online');
-    showBackButton();
-});
+function ProsesPaymentRetail(){
+    
+}
 
-wallet.addEventListener('mouseup', ()=>{
-    wallet_window.style.width = '100%';
-    hidePaymentMethodWindow();
-    setTitle('Wallet');
-    showBackButton();
-});
+function ProsesPaymentCard(){
+    
+}
 
-function closeWindow(){
+function ProsesPaymentDebit(){
+    
+}
+
+function ProsesPaymentWallet(){
+    
+}
+
+function showChildWindow(window_id){
+    var selectedWindow = document.getElementById(window_id);
+    selectedWindow.style.width = '100%';
+    hidePaymentMethodWindow();
+    switch(window_id){
+        case 'atm-window': setTitle('ATM'); break;
+        case 'retail-window': setTitle('Retail'); break;
+        case 'card-window': setTitle('Credit / Debit Card'); break;
+        case 'debit-window': setTitle('Debit Online'); break;
+        case 'wallet-window': setTitle('Wallet'); break;
+        default: setTitle('');
+    }
+    showBackButton();
+}
+
+function backToMainWindow(){
     atm_window.style.width = '0';
     retail_window.style.width = '0';
     card_window.style.width = '0';
@@ -74,3 +85,54 @@ function closeWindow(){
     setTitle('Payment Method');
     hideBackButton();
 }
+
+function loadAtmPaymentList(){
+    var banks = [
+        {
+            id : 'bni',
+            name: 'Bank Negara Indonesia (BNI)',
+            logoUrl: ''
+        },{
+            id : 'bri',
+            name: 'Bank Rakyat Indonesia (BRI)',
+            logoUrl: ''
+        },{
+            id : 'mandiri',
+            name: 'Bank Mandiri',
+            logoUrl: ''
+        }
+    ];
+
+    let bankComponent = '';
+    banks.forEach(bank=>{
+        bankComponent += `<input type="radio" id="${bank.id}" name="BankId" value="${bank.id}">
+                            <label for="${bank.id}">${bank.name}</label><br></br>`
+    });
+    document.getElementById('atm-bank-list').innerHTML = bankComponent;
+}
+
+function loadRetailPaymentList(){
+    var retails = [
+        {
+            id : 'indomaret',
+            name: 'Indomaret',
+            logoUrl: ''
+        },{
+            id : 'alfamart',
+            name: 'Alfamart',
+            logoUrl: ''
+        }
+    ];
+
+    let retailComponent = '';
+    retails.forEach(item=>{
+        retailComponent += `<input type="radio" id="${item.id}" name="RetailId" value="${item.id}">
+                            <label for="${item.id}">${item.name}</label><br></br>`
+    });
+    document.getElementById('retail-list').innerHTML = retailComponent;
+}
+
+(function(){
+    loadAtmPaymentList();
+    loadRetailPaymentList();
+})();

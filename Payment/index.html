@@ -12,47 +12,53 @@
             <h3>Rp 540.000</h3>
         </div>
         <div class="title-bar">
-            <button class="back-button hidden" onclick="closeWindow()">&#10094</button>
+            <button class="back-button hidden" onclick="backToMainWindow()">&#10094&#10094</button>
             <div class="title">Payment Method</div>
         </div>
         <div class="payment-container">
             <div class="payment-method" id="paymentMethodWindow">
-                <div class="item" id="atm">
+                <div class="item" id="atm" onclick="showChildWindow('atm-window')">
                     <div>ATM</div>
                     <div>&#10095</div>
                 </div>
-                <div class="item" id="retail">
-                    <div>Payment Retail</div>
+                <div class="item" id="retail" onclick="showChildWindow('retail-window')">
+                    <div>Retail</div>
                     <div>&#10095</div>
                 </div>
-                <div class="item" id="card">
+                <div class="item" id="card" onclick="showChildWindow('card-window')">
                     <div>Credit / Debit</div>
                     <div>&#10095</div>
                 </div>
-                <div class="item" id="debit">
+                <div class="item" id="debit" onclick="showChildWindow('debit-window')">
                     <div>Debit Online</div>
                     <div>&#10095</div>
                 </div>
-                <div class="item" id="wallet">
+                <div class="item" id="wallet" onclick="showChildWindow('wallet-window')">
                     <div>Wallet</div>
                     <div>&#10095</div>
                 </div>
             </div>
     
             <div class="window" id="atm-window">
-                <div id="back">ATM</div>
+                <div id="atm-bank-list"></div>
+                <button onclick="SetPaymentMethod('atm')">NEXT &#10095</button>
             </div>
             <div class="window" id="retail-window">
-                <div>Retail</div>
+                <div id="retail-list"></div>
+                <button onclick="SetPaymentMethod('retail')">NEXT &#10095</button>
+                </form>
             </div>
             <div class="window" id="card-window">
                 <div>Card</div>
+                <button onclick="SetPaymentMethod('card')">NEXT &#10095</button>
             </div>
             <div class="window" id="debit-window">
                 <div>Debit</div>
+                <button onclick="SetPaymentMethod('debit')">NEXT &#10095</button>
             </div>
             <div class="window" id="wallet-window">
                 <div>Wallet</div>
+                <button onclick="SetPaymentMethod('wallet')">NEXT &#10095</button>
             </div>
         </div>
     </div>
