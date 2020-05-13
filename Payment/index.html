@@ -5,64 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment</title>
     <link rel="stylesheet" type="text/css" href="payment-widget.css"/>
+    <style>
+        body{
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="payment-detail">
-            <h3>Rp 540.000</h3>
-        </div>
-        <div class="title-bar">
-            <button class="back-button hidden" onclick="backToMainWindow()">&#10094&#10094</button>
-            <div class="title">Payment Method</div>
-        </div>
-        <div class="payment-container">
-            <div class="payment-method" id="paymentMethodWindow">
-                <div class="item" id="atm" onclick="showChildWindow('atm-window')">
-                    <div>ATM</div>
-                    <div>&#10095</div>
-                </div>
-                <div class="item" id="retail" onclick="showChildWindow('retail-window')">
-                    <div>Retail</div>
-                    <div>&#10095</div>
-                </div>
-                <div class="item" id="card" onclick="showChildWindow('card-window')">
-                    <div>Credit / Debit</div>
-                    <div>&#10095</div>
-                </div>
-                <div class="item" id="debit" onclick="showChildWindow('debit-window')">
-                    <div>Debit Online</div>
-                    <div>&#10095</div>
-                </div>
-                <div class="item" id="wallet" onclick="showChildWindow('wallet-window')">
-                    <div>Wallet</div>
-                    <div>&#10095</div>
-                </div>
+    <div id="payment">
+        <div class="main-container">
+            <div class="payment-detail">
+                <h3>Rp {{payment.amount}}</h3>
             </div>
-    
-            <div class="window" id="atm-window">
-                <div class="list-container" id="atm-bank-list"></div>
-                <button onclick="SetPaymentMethod('atm')">NEXT &#10095</button>
+            <div class="title-bar">
+                <button class="back-button" v-if="selectedMethodId != 'NONE'" 
+                    v-on:click="backToMainWindow()">&#10094&#10094</button>
+                <div class="title">{{selectedMethodId == 'NONE'?'Payment Methods' : selectedMethod.name}}</div>
             </div>
-            <div class="window" id="retail-window">
-                <div class="list-container" id="retail-list"></div>
-                <button onclick="SetPaymentMethod('retail')">NEXT &#10095</button>
-                </form>
-            </div>
-            <div class="window" id="card-window">
-                <div>Card</div>
-                <button onclick="SetPaymentMethod('card')">NEXT &#10095</button>
-            </div>
-            <div class="window" id="debit-window">
-                <div>Debit</div>
-                <button onclick="SetPaymentMethod('debit')">NEXT &#10095</button>
-            </div>
-            <div class="window" id="wallet-window">
-                <div>Wallet</div>
-                <button onclick="SetPaymentMethod('wallet')">NEXT &#10095</button>
+            <div class="payment-container">
+
+                <transition name="slide-fade" mode="out-in">
+                    <div key=1 class="payment-method" v-if="selectedMethodId == 'NONE'">
+                        <div v-for="method in payment.methods" class="item" :key="method.id" v-on:click="setSelectedMethod(method.id)" >
+                            <div>{{method.name}}</div>
+                            <div>&#10095</div>
+                        </div>
+                    </div>
+                    <div key=2 class="window" v-else>
+                        <div class="list-item" v-for="item in selectedMethod.child">
+                            <input type="radio" v-bind:id="item.id" v-bind:name="selectedMethod.id">
+                            <label v-bind:for="item.id">
+                                <img v-bind:src="item.iconUrl" height="25px"/>
+                                <span>{{item.name}}</label></span>
+                        </div>
+                        <br/>
+                        <button>NEXT &#10095</button>
+                    </div>
+                </transition>
+
+                
             </div>
         </div>
     </div>
 </body>
-<script defer src="jquery.min.js"></script>
-<script defer src="payment-widget.js"></script>
+<script src="./vue.min.js"></script>
+<script src="./payment-methods.js"></script>
+<script>
+    var app = new Vue({
+        el: '#payment',
+        data: {
+            payment: payment,
+            selectedMethodId: 'NONE',
+            selectedMethod: this.payment.methods.filter(m => m.id == 'atm')[0],
+            setSelectedMethod: function(methodId){
+                this.selectedMethod = this.payment.methods.filter(m => m.id == methodId)[0];
+                this.selectedMethodId = methodId;
+                this.payment.title = this.selectedMethod.name;
+            },
+            backToMainWindow: function(){
+                this.selectedMethodId = 'NONE';
+            }
+        }
+    })
+</script>
 </html>

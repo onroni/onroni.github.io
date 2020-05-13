@@ -58,11 +58,12 @@ body {
 }
 .list-item{
     border-bottom: 1px solid #eee;
-    padding: 15px 0px;
+    padding: 10px 0px;
+    margin: 10px 0px;
 }
 
 .window {
-    width: 100%;
+    width: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -77,20 +78,9 @@ body {
     border: none;
     border-radius: 3px;
 }
-
-label img{
-    margin-bottom: -5px;
-    margin-left: 5px;
+.window, .payment-method{
+    transition: width 0.3s;
 }
-
-/* Animation */
-.slide-fade-enter-active {
-    transition: all .3s ease-in;
-  }
-  .slide-fade-leave-active {
-    transition: all .3s ease-out;
-  }
-  .slide-fade-enter, .slide-fade-leave-to{
-    transform: translateX(10px);
-    opacity: 0;
-  }
+.hidden{
+    display: none;
+}
