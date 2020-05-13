@@ -1,6 +1,6 @@
 var payment = {
     title: 'Payment Methods',
-    amount: 0,
+    amount: 523462,
     methods: [
         {
             id:'atm',
