@@ -105,8 +105,10 @@ function loadAtmPaymentList(){
 
     let bankComponent = '';
     banks.forEach(bank=>{
-        bankComponent += `<input type="radio" id="${bank.id}" name="BankId" value="${bank.id}">
-                            <label for="${bank.id}">${bank.name}</label><br></br>`
+        bankComponent += `<div class="list-item">
+                            <input type="radio" id="${bank.id}" name="BankId" value="${bank.id}">
+                            <label for="${bank.id}">${bank.name}</label>
+                        </div>`
     });
     document.getElementById('atm-bank-list').innerHTML = bankComponent;
 }
@@ -126,8 +128,10 @@ function loadRetailPaymentList(){
 
     let retailComponent = '';
     retails.forEach(item=>{
-        retailComponent += `<input type="radio" id="${item.id}" name="RetailId" value="${item.id}">
-                            <label for="${item.id}">${item.name}</label><br></br>`
+        retailComponent += `<div class="list-item">
+                            <input type="radio" id="${item.id}" name="RetailId" value="${item.id}">
+                            <label for="${item.id}">${item.name}</label>
+                            </div>`
     });
     document.getElementById('retail-list').innerHTML = retailComponent;
 }
