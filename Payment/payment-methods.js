@@ -5,6 +5,7 @@ var payment = {
         {
             id:'atm',
             name:'ATM',
+            laIcon: 'la la-exchange-alt',
             child: [
                 {
                     id:'BRI',
@@ -24,6 +25,7 @@ var payment = {
         {
             id:'retail',
             name:'Retail',
+            laIcon: 'la la-store',
             child: [
                 {
                     id:'alfamart',
@@ -39,37 +41,35 @@ var payment = {
         {
             id:'card',
             name:'Debit / Credit Card',
-            child: [
-                {
-                    id:'bri',
-                    name: 'BRI',
-                    iconUrl: './assets/img/bri.png'
-                },{
-                    id:'bni',
-                    name: 'BNI',
-                    iconUrl: './assets/img/bni.png'
-                }
-            ]
+            laIcon: 'la la-credit-card',
+            child: []
         },
         {
             id:'debit',
             name:'Debit Online',
+            laIcon: 'la la-mobile',
             child: [
                 {
                     id:'bca',
                     name: 'BCA OneKlik',
-                    iconUrl: './assets/img/bca.png'
+                    iconUrl: './assets/img/oneklik.png'
                 }
             ]
         },
         {
             id:'wallet',
             name:'Wallet',
+            laIcon: 'la la-wallet',
             child: [
                 {
-                    id:'doku',
-                    name: 'Doku',
-                    iconUrl: './assets/img/doku.png'
+                    id:'ovo',
+                    name: 'OVO',
+                    iconUrl: './assets/img/ovo.jpeg'
+                },
+                {
+                    id:'linkaja',
+                    name: 'Link Aja',
+                    iconUrl: './assets/img/linkaja.png'
                 }
             ]
         }

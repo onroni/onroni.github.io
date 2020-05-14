@@ -1,16 +1,39 @@
 :root{
     --citilink-green: rgb(101, 179, 46);
 }
+i, .back-button{
+    color: var(--citilink-green);
+}
 #payment{
     width: 400px;
+    color: #333;
 }
 @media only screen and (max-width: 400px) {
     #payment {
       width: 100%;
     }
 }
+.view-payment-detail{
+    width: 100%;
+    overflow: hidden;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+.view-payment-detail .item{
+    display: flex;
+    justify-content: space-between;
+}
 .payment-detail{
     padding: 20px;
+    display: flex;
+    align-items: center;
+}
+.payment-detail i{
+    padding-right: 10px;
+    border-right: 1px solid #ccc;
+}
+.payment-detail .amount-detail{
+    margin-left: 10px;
 }
 .back-button{
     background: none;
@@ -29,7 +52,7 @@ body {
     border: 3px solid #CCC;
 }
 .title-bar{
-    background: #DDD;
+    background: #EEE;
     height: 40px;
     display: flex;
     align-items: center;   
@@ -47,7 +70,6 @@ body {
     width: 93%;
     margin: 10px;
     overflow: hidden;
-    height: 300px;
 }
 .payment-method{
     width: 100%;
@@ -87,6 +109,13 @@ body {
 label img{
     margin-bottom: -5px;
     margin-left: 5px;
+}
+.icon-label{
+    display: flex;
+}
+.icon-label i{
+    margin-right: 10px;
+    font-size: 24px;
 }
 
 /* Animation */
