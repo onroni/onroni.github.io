@@ -37,7 +37,8 @@
                     </div>
                     <div key=2 class="window" v-else>
                         <div class="list-item" v-for="item in selectedMethod.child">
-                            <input type="radio" v-bind:id="item.id" v-bind:name="selectedMethod.id">
+                            <input type="radio" v-bind:id="item.id" v-bind:name="selectedMethod.id"
+                                v-on:click="console.log(selectedMethod.id, item.id)">
                             <label v-bind:for="item.id">
                                 <img v-bind:src="item.iconUrl" height="25px"/>
                                 <span>{{item.name}}</label></span>
@@ -46,8 +47,6 @@
                         <button>NEXT &#10095</button>
                     </div>
                 </transition>
-
-                
             </div>
         </div>
     </div>
@@ -60,9 +59,9 @@
         data: {
             payment: payment,
             selectedMethodId: 'NONE',
-            selectedMethod: this.payment.methods.filter(m => m.id == 'atm')[0],
+            selectedMethod: this.payment.methods.find(m => m.id == 'atm'),
             setSelectedMethod: function(methodId){
-                this.selectedMethod = this.payment.methods.filter(m => m.id == methodId)[0];
+                this.selectedMethod = this.payment.methods.find(m => m.id == methodId);
                 this.selectedMethodId = methodId;
                 this.payment.title = this.selectedMethod.name;
             },
