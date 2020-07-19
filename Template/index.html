@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <link href="./citilink-style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div  id="table">
+        <nav>
+        </nav>
+            <form id="userForm">
+                <input type="text" name="name" v-model="form.name">
+                <input type="text" name="alamat" v-model="form.alamat">
+                <input type="text" name="phone" v-model="form.phone">
+                <input type="text" name="age" v-model="form.age">
+    
+                <button type="button" v-on:click="addUser()" class="btn border">Simpan</button>
+            </form>
+            <table>
+                <thead>
+                    <td>Name</td>
+                    <td>Alamat</td>
+                    <td>Phone</td>
+                    <td>Age</td>
+                </thead>
+                <tr v-for="(user, index) in users">
+                    <td>{{user.name}}</td>
+                    <td>{{user.alamat}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.age}}</td>
+                    <td><button v-on:click="removeUser(index)">Remove</button></td>
+                </tr>
+            </table>
+    </div>
+    
+    
+</body>
+<script>
+    var table = new Vue({
+        el: '#table',
+        data: {
+            users: [],
+            form: {
+                name: '',
+                alamat:'',
+                phone: '',
+                age: ''
+            }
+        },
+        methods: {
+            removeUser: function(index){
+                this.users.splice(index,1)
+            },
+            addUser: function(){
+                console.log(this.form)
+                console.log(this.users)
+                this.users.push(this.form);
+            }
+        },
+        mounted(){
+            this.users = [
+                {
+                    name: 'Roni',
+                    alamat: 'Jauuuhhh',
+                    phone: '0878438345',
+                    age: 25
+                },{
+                    name: 'Stiawan',
+                    alamat: 'Banget',
+                    phone: '0878438345',
+                    age: 26
+                }
+            ]
+        }
+    });
+</script>
+
+</html>

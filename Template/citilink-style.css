@@ -1,0 +1,10 @@
+:root{
+    --citi-green: #13be31;
+    --citi-softgreen: #67bd3c;
+}
+
+.btn.border{
+    border-radius: 3px;
+    border: 2px solid var(--citi-green);
+    background: #fff;
+}
