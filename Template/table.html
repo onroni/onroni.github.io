@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <script src="/jquery.min.js"></script>
+    <script src="/popper.min.js"></script>
+    <script src="/bootstrap.min.js"></script>
+</head>
+<body>
+    
+<style>
+    table {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    table td, table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover {
+        background-color: #ddd;
+    }
+
+    table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+<h2>Voucher Refund Request</h2>
+
+<div id="vue-root">
+    <table>
+        <tr>
+            <th>No.</th>
+            <th v-on:click="sort('PassangerName')">Passanger Name</th>
+            <th v-on:click="sort('IdentityNumber')">Identity Number</th>
+            <th v-on:click="sort('PhoneNumber')">Phone Number</th>
+            <th v-on:click="sort('Email')">Email</th>
+            <th v-on:click="sort('Pnr')">PNR</th>
+            <th v-on:click="sort('Departure')">Departure</th>
+            <th v-on:click="sort('Arrival')">Arrival</th>
+            <th></th>
+        </tr>
+        <tr v-for="(req,index) in requests">
+            <td>{{index+1}}</td>
+            <td>{{req.PassangerName}}</td>
+            <td>{{req.IdentityNumber}}</td>
+            <td>{{req.PhoneNumber}}</td>
+            <td>{{req.Email}}</td>
+            <td>{{req.Pnr}}</td>
+            <td>{{req.Departure}}</td>
+            <td>{{req.Arrival}}</td>
+            <td>
+                <button v-on:click="goToDetail(req.Id)">Detail</button>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" v-on:click="SetPage(1)">First</a></li>
+            <li class="page-item"><a class="page-link" v-on:click="SetPage(page-1)">Prev</a></li>
+            <template v-for="tab in tabs">
+                <li :class="{'page-item':true, 'active': tab==page}">
+                    <a class="page-link" v-on:click="SetPage(tab)">{{tab}}</a></li>
+            </template>
+            <li class="page-item"><a class="page-link" v-on:click="SetPage(page+1)">Next</a></li>
+            <li class="page-item"><a class="page-link" v-on:click="SetPage(getNumberOfPages(count, pageSize))">Last</a></li>
+        </ul>
+    </nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script>
+    new Vue({
+        el: '#vue-root',
+        data: {
+            isAscending: false,
+            allRequests: [],
+            requests: [],
+            page: 1,
+            pageSize: 5,
+            tabs: [],
+            count: 300
+        },
+        methods: {
+            getAllData: async function () {
+                try {
+                    let response = await fetch('/Voucher/GetAllRequest');
+                    response = await response.json();
+                    this.requests = response.Data;
+                    console.log(this.requests);
+                }
+                catch (err) {
+                    alert(err);
+                }
+            },
+            goToDetail: function(id) {
+                window.location = '/Voucher/Detail/' + id;
+            },
+            getPageTabs: function(){               
+                this.tabs[0] = this.page == 1? 1 : this.page-1;
+                this.tabs[1] = this.page == 1? this.page+1: this.page;
+                this.tabs[2] = this.page == 1? this.page+2: this.page+1;
+                
+                let numberOfPages = this.getNumberOfPages();
+                if(this.page >= numberOfPages){
+                    this.page = numberOfPages;
+                    this.tabs[0] = this.page-2;
+                    this.tabs[1] = this.page-1;
+                    this.tabs[2] = this.page;
+                }
+            },
+            getNumberOfPages: function(){
+                let numberOfPages = Math.floor(this.count / this.pageSize);
+                if(this.count % this.pageSize > 0){
+                    numberOfPages += 1;
+                }
+                return numberOfPages;
+            },
+            ShowCurrentPage: function(){
+                this.getPageTabs();
+                let startIndex = (this.page-1)*this.pageSize;
+                let endIndex = startIndex + this.pageSize;
+                this.requests = this.allRequests.slice(startIndex, endIndex);
+                // console.log(this.page, this.pageSize, this.count)
+            },
+            SetPage: function(tab){
+                this.page = tab;
+                if(this.page < 1) this.page = 1;
+                this.ShowCurrentPage();
+            },
+            sort: function(property){
+                console.log(property)
+                if(this.isAscending) this.allRequests.sort((a,b) => (a[property] > b[property]) ? 1 : ((b[property] > a[property]) ? -1 : 0)); 
+                else this.allRequests.sort((a,b) => (a[property] < b[property]) ? 1 : ((b[property] < a[property]) ? -1 : 0)); 
+                this.ShowCurrentPage();
+                this.isAscending = !this.isAscending;
+            }
+        },
+        mounted() {
+            // this.getAllData();
+            this.allRequests = [];
+
+            function makeid(length){
+                var result           = '';
+                var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var charactersLength = characters.length;
+                for ( var i = 0; i < length; i++ ) {
+                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                }
+                return result;
+            }
+
+            new Array(100).fill(0).forEach(element => {
+                this.allRequests.push({
+                    PassangerName: makeid(15),
+                    IdentityNumber: makeid(16),
+                    PhoneNumber: makeid(12),
+                    Email: makeid(15),
+                    Pnr: makeid(6).toUpperCase(),
+                    Departure: 'CGK',
+                    Arrival: 'LOP'
+                });
+            });
+            this.count = this.allRequests.length;
+            this.ShowCurrentPage();
+        }
+    });
+
+    
+</script>
+
+</body>
+</html>
