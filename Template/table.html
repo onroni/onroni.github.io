@@ -44,7 +44,6 @@
 <div id="vue-root">
     <table>
         <tr>
-            <th>No.</th>
             <th v-on:click="sort('PassangerName')">Passanger Name</th>
             <th v-on:click="sort('IdentityNumber')">Identity Number</th>
             <th v-on:click="sort('PhoneNumber')">Phone Number</th>
@@ -55,7 +54,6 @@
             <th></th>
         </tr>
         <tr v-for="(req,index) in requests">
-            <td>{{index+1}}</td>
             <td>{{req.PassangerName}}</td>
             <td>{{req.IdentityNumber}}</td>
             <td>{{req.PhoneNumber}}</td>
@@ -69,7 +67,14 @@
         </tr>
     </table>
     <br/>
-    <nav aria-label="Page navigation example">
+
+    <select v-model="pageSize">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+    </select>
+
+    <div aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item"><a class="page-link" v-on:click="SetPage(1)">First</a></li>
             <li class="page-item"><a class="page-link" v-on:click="SetPage(page-1)">Prev</a></li>
@@ -80,7 +85,7 @@
             <li class="page-item"><a class="page-link" v-on:click="SetPage(page+1)">Next</a></li>
             <li class="page-item"><a class="page-link" v-on:click="SetPage(getNumberOfPages(count, pageSize))">Last</a></li>
         </ul>
-    </nav>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
@@ -135,6 +140,7 @@
                 this.getPageTabs();
                 let startIndex = (this.page-1)*this.pageSize;
                 let endIndex = startIndex + this.pageSize;
+                console.log(startIndex, endIndex);
                 this.requests = this.allRequests.slice(startIndex, endIndex);
                 // console.log(this.page, this.pageSize, this.count)
             },
@@ -144,11 +150,16 @@
                 this.ShowCurrentPage();
             },
             sort: function(property){
-                console.log(property)
                 if(this.isAscending) this.allRequests.sort((a,b) => (a[property] > b[property]) ? 1 : ((b[property] > a[property]) ? -1 : 0)); 
                 else this.allRequests.sort((a,b) => (a[property] < b[property]) ? 1 : ((b[property] < a[property]) ? -1 : 0)); 
                 this.ShowCurrentPage();
                 this.isAscending = !this.isAscending;
+            }
+        },
+        watch: {
+            pageSize: function(newVal){
+                this.pageSize = parseInt(newVal);
+                this.ShowCurrentPage();
             }
         },
         mounted() {
