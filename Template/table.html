@@ -42,6 +42,8 @@
 <h2>Voucher Refund Request</h2>
 
 <div id="vue-root">
+
+    <input type="text" v-model="textToSearch"></input>
     <table>
         <tr>
             <th v-on:click="sort('PassangerName')">Passanger Name</th>
@@ -99,7 +101,8 @@
             page: 1,
             pageSize: 5,
             tabs: [],
-            count: 300
+            count: 300,
+            textToSearch: '',
         },
         methods: {
             getAllData: async function () {
@@ -160,6 +163,12 @@
             pageSize: function(newVal){
                 this.pageSize = parseInt(newVal);
                 this.ShowCurrentPage();
+            },
+            textToSearch: function(newVal){
+                let filtered = this.allRequests.filter(x=>{
+                    return x.Pnr.includes(newVal);
+                });
+                this.requests = filtered.slice(0, this.pageSize);
             }
         },
         mounted() {
