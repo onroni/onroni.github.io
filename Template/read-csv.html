@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Read File (via User Input selection)</title>
+    <script src="vue.min.js"></script>
+    <style>
+        th, td{
+            padding: 10px;
+            background-color: rgb(131, 243, 137);
+        }
+    </style>
+</head>
+<body>
+    <div id="container">    
+        <input type="file" @change='readText' />
+
+        <table>
+            <tr>
+                <th>PNR</th>
+                <th>Status</th>
+            </tr>
+            <template v-for="(pnr, index) in PNRs">
+                <tr >
+                    <td>{{pnr.pnr}}</td>
+                    <td>{{pnr.status}}</td>
+                    <td><button v-on:click="deletePnr(index)">Delete</button></td>
+                </tr>
+            </template>
+        </table>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: '#container',
+        data: {
+            roni: 'Roni Stiawan',
+            PNRs: [],
+        },
+        methods:{
+            readText: function(event) {
+                console.log("Reading file....")
+                var reader = new FileReader();    
+                reader.onload = e => {
+                    let result = e.target.result;
+                    lines = result.split('\n');
+                    lines.forEach(line => {
+                        let columns = line.split('\t');
+                        this.PNRs.push({
+                            pnr: columns[0],
+                            status: columns[1]
+                        })
+                    });
+                    document.querySelector('input[type="file"]').value = ''
+                };
+                reader.readAsText(event.target.files[0]);
+                return true;
+            },
+            deletePnr: function(index){
+                this.PNRs.splice(index, 1);
+            }
+        }
+    });
+</script>
+
+</html>
